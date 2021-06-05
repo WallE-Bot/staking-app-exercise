@@ -27,11 +27,20 @@ contract Staker {
   //  It should either call `exampleExternalContract.complete{value: address(this).balance}()` to send all the value
   function execute() public {
     // send all the value to the example contract
-    exampleExternalContract.complete{value: address(this).balance}();
+    if (timeLeft() > 0 && address(this).balance >= threshold) {
+      exampleExternalContract.complete{value: address(this).balance}();
+    }
   }
 
 
   // if the `threshold` was not met, allow everyone to call a `withdraw()` function
+  function withdraw(address payable) public {
+    if (timeLeft() <= 0 && address(this).balance < threshold) {
+      uint balance = balances[msg.sender];
+      balances[msg.sender] = 0;
+      payable(msg.sender).transfer(balance);
+    }
+  }
 
 
   // Add a `timeLeft()` view function that returns the time left before the deadline for the frontend
