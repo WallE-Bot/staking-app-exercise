@@ -131,7 +131,6 @@ function App(props) {
   console.log("⏳ timeLeft:",timeLeft)
 
 
-
   const complete = useContractReader(readContracts,"ExampleExternalContract", "completed")
   console.log("✅ complete:",complete)
 
@@ -243,6 +242,7 @@ function App(props) {
 
           <div style={{padding:8,marginTop:32}}>
             <div>Timeleft:</div>
+            {console.log(timeLeft)}
             {timeLeft && humanizeDuration(timeLeft.toNumber()*1000)}
           </div>
 
