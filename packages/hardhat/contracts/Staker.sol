@@ -43,8 +43,8 @@ contract Staker {
 
   // if the `threshold` was not met, allow everyone to call a `withdraw()` function
   function withdraw(address payable) public {
-    // require time to have run out
     require(timeLeft() <= 0, "Time still remaining to meet staking treshold");
+    require(balances[msg.sender] > 0, 'No balance for that address');
 
     // allow withdrawal
     uint balance = balances[msg.sender];
