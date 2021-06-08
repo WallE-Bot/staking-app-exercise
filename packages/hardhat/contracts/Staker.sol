@@ -8,8 +8,9 @@ contract Staker {
   ExampleExternalContract public exampleExternalContract;
   mapping(address => uint256) public balances;
   event Stake(address, uint256);
-  uint256 public constant threshold = .001 ether;
+  uint256 public constant threshold = 1 wei;
   uint256 public deadline = now + 30 seconds;
+  string public executionFeedback = '';
 
   constructor(address exampleExternalContractAddress) public {
     exampleExternalContract = ExampleExternalContract(exampleExternalContractAddress);
@@ -26,12 +27,19 @@ contract Staker {
   // After some `deadline` allow anyone to call an `execute()` function
   //  It should either call `exampleExternalContract.complete{value: address(this).balance}()` to send all the value
   function execute() public {
-    // send all the value to the example contract
-    if (timeLeft() > 0 && address(this).balance >= threshold) {
-      exampleExternalContract.complete{value: address(this).balance}();
+    // check if already completed
+    if (exampleExternalContract.completed()) {
+      executionFeedback = "execution already successfully completed";
+    } else if (timeLeft() <= 0) {
+      executionFeedback = "time ran out";
+    } else { // determine if treshold met
+      if (address(this).balance >= threshold) {
+        exampleExternalContract.complete{value: address(this).balance}();
+      } else {
+        executionFeedback = "amount staked threshold not met";
+      }
     }
   }
-
 
   // if the `threshold` was not met, allow everyone to call a `withdraw()` function
   function withdraw(address payable) public {

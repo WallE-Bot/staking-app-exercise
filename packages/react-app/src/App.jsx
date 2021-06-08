@@ -131,6 +131,9 @@ function App(props) {
   const timeLeft = useContractReader(readContracts,"Staker", "timeLeft")
   console.log("⏳ timeLeft:",timeLeft)
 
+  // keep track of staker execution feedback
+  const executionFeedback = useContractReader(readContracts,"Staker", "executionFeedback")
+  console.log("⏳ executionFeedback:",executionFeedback)
 
   const complete = useContractReader(readContracts,"ExampleExternalContract", "completed")
   console.log("✅ complete:",complete)
@@ -216,8 +219,11 @@ function App(props) {
     )
   }
 
-
-
+  const generateExecutionFeedbackHTML = () => {
+    return executionFeedback === ''
+      ? ''
+      : <p>{executionFeedback}</p>;
+  }
 
   return (
     <div className="App">
@@ -272,6 +278,7 @@ function App(props) {
             <Button type={"default"} onClick={()=>{
               tx( writeContracts.Staker.execute() )
             }}>📡  Execute!</Button>
+            {generateExecutionFeedbackHTML()}
           </div>
 
           <div style={{padding:8}}>
