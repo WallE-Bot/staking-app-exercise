@@ -112,6 +112,7 @@ function App(props) {
 
   //keep track of contract balance to know how much has been staked total:
   const stakerContractBalance = useBalance(localProvider, readContracts && readContracts.Staker.address);
+  console.log('stakercontractbalance', stakerContractBalance);
   if(DEBUG) console.log("💵 stakerContractBalance", stakerContractBalance )
 
   //keep track of total 'threshold' needed of ETH
