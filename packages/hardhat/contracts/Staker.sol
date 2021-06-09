@@ -16,12 +16,14 @@ contract Staker {
     exampleExternalContract = ExampleExternalContract(exampleExternalContractAddress);
   }
 
+  modifier withinDeadline {
+    require(timeLeft() > 0, 'time ran out');
+    _;
+  }
+
   // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
   //  ( make sure to add a `Stake(address,uint256)` event and emit it for the frontend <List/> display )
-  function stake(uint amount) external payable {
-    // stake only if time still remains
-    require(timeLeft() > 0, 'Time already ran out');
-
+  function stake(uint amount) external payable withinDeadline {
     balances[msg.sender] += amount;
     emit Stake(msg.sender, amount);
   }
