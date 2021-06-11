@@ -10,7 +10,7 @@ import { useUserAddress } from "eth-hooks";
 import { useExchangePrice, useGasPrice, useUserProvider, useContractLoader, useContractReader, useEventListener, useBalance, useExternalContractLoader } from "./hooks";
 import { Header, Account, Faucet, Ramp, Contract, GasGauge, Balance, Address } from "./components";
 import { Transactor } from "./helpers";
-import { formatEther, parseEther } from "@ethersproject/units";
+import { formatEther, parseEther, parseUnits } from "@ethersproject/units";
 import { Hints, ExampleUI, Subgraph } from "./views"
 import { INFURA_ID, DAI_ADDRESS, DAI_ABI, NETWORK, NETWORKS } from "./constants";
 const humanizeDuration = require("humanize-duration");
@@ -289,7 +289,7 @@ function App(props) {
 
           <div style={{padding:8}}>
             <Button type={ balanceStaked ? "success" : "primary"} onClick={()=>{
-              tx( writeContracts.Staker.stake({value: parseEther("0.5")}) )
+              tx( writeContracts.Staker.stake(parseEther("0.5")) )
             }}>🥩  Stake 0.5 ether!</Button>
           </div>
 

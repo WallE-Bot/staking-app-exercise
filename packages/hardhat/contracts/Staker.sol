@@ -8,8 +8,8 @@ contract Staker {
   ExampleExternalContract public exampleExternalContract;
   mapping(address => uint256) public balances;
   event Stake(address, uint256);
-  uint256 public constant threshold = 1 wei;
-  uint256 public deadline = now + 2 minutes;
+  uint256 public constant threshold = 10 ether;
+  uint256 public deadline = now + 10 minutes;
   string public executionFeedback = '';
 
   constructor(address exampleExternalContractAddress) public {
@@ -29,6 +29,7 @@ contract Staker {
   // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
   //  ( make sure to add a `Stake(address,uint256)` event and emit it for the frontend <List/> display )
   function stake(uint amount) external payable withinDeadline {
+    console.log('stake amount', amount);
     balances[msg.sender] += amount;
     emit Stake(msg.sender, amount);
   }
