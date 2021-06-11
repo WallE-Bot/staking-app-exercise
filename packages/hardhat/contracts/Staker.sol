@@ -9,7 +9,7 @@ contract Staker {
   mapping(address => uint256) public balances;
   event Stake(address, uint256);
   uint256 public constant threshold = 1 wei;
-  uint256 public deadline = now + 30 seconds;
+  uint256 public deadline = now + 2 minutes;
   string public executionFeedback = '';
 
   constructor(address exampleExternalContractAddress) public {
