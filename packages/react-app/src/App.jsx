@@ -237,9 +237,6 @@ function App(props) {
           <Menu.Item key="/">
             <Link onClick={()=>{setRoute("/")}} to="/">Staker UI</Link>
           </Menu.Item>
-          <Menu.Item key="/contracts">
-            <Link onClick={()=>{setRoute("/contracts")}} to="/contracts">Debug Contracts</Link>
-          </Menu.Item>
         </Menu>
 
         <Switch>
