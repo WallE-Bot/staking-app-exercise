@@ -7,15 +7,30 @@
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: row;
+  justify-content: flex-start;
+  flex-direction: column;
+  position: relative;
 }
 
 .time-left-text {
-  display: block !important;
+  margin-bottom: 120px;
+  margin-top: 10px;
 }
 
 .time-left-clock {
-  display: block !important;
   font-size: 45px;
+}
+
+.help {
+  width: 80px;
+  height: 80px;
+  border: .5px solid #eee;
+  border-radius: 50%;
+  position: absolute;
+  right: -10px;
+  bottom: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
 }
