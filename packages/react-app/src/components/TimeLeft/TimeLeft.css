@@ -1,0 +1,21 @@
+.time-left {
+  border: .5px solid #eee;
+  width: 450px;
+  height: 450px;
+  padding: 50px;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.time-left-text {
+  display: block !important;
+}
+
+.time-left-clock {
+  display: block !important;
+  font-size: 45px;
+}

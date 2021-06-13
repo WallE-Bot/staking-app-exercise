@@ -8,12 +8,11 @@ import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { useUserAddress } from "eth-hooks";
 import { useExchangePrice, useGasPrice, useUserProvider, useContractLoader, useContractReader, useEventListener, useBalance, useExternalContractLoader } from "./hooks";
-import { Header, Account, Faucet, Ramp, Contract, GasGauge, Balance, Address } from "./components";
+import { Header, TotalStaked, TimeLeft, Account, Faucet, Ramp, Contract, GasGauge, Balance, Address } from "./components";
 import { Transactor } from "./helpers";
 import { formatEther, parseEther, parseUnits } from "@ethersproject/units";
 import { Hints, ExampleUI, Subgraph } from "./views"
 import { INFURA_ID, DAI_ADDRESS, DAI_ABI, NETWORK, NETWORKS } from "./constants";
-const humanizeDuration = require("humanize-duration");
 /*
     Welcome to 🏗 scaffold-eth !
 
@@ -241,25 +240,17 @@ function App(props) {
           <Switch>
             <Route exact path="/">
 
+            {/* notification bar for threshold met*/}
             {completeDisplay}
 
-            <div style={{padding:8,marginTop:32}}>
-              <div>Timeleft:</div>
-              {console.log(timeLeft)}
-              {timeLeft && humanizeDuration(timeLeft.toNumber()*1000)}
-            </div>
+            <TotalStaked
+              stakerContractBalance={stakerContractBalance}
+              threshold={threshold}
+            />
 
-            <div style={{padding:8}}>
-              <div>Total staked:</div>
-              <Balance
-                balance={stakerContractBalance}
-                fontSize={64}
-              />/<Balance
-                balance={threshold}
-                fontSize={64}
-              />
-            </div>
-
+            <TimeLeft
+              timeLeft={timeLeft}
+            />
 
             <div style={{padding:8}}>
               <div>You staked:</div>

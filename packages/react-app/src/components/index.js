@@ -13,3 +13,5 @@ export { default as Blockie } from "./Blockie";
 export { default as Header } from "./Header/Header.jsx";
 export { default as Timeline } from "./Timeline";
 export { default as GasGauge } from "./GasGauge";
+export { default as TotalStaked } from "./TotalStaked/TotalStaked.jsx";
+export { default as TimeLeft } from "./TimeLeft/TimeLeft.jsx";
