@@ -234,139 +234,135 @@ function App(props) {
         localProvider={localProvider}
       />
       {networkDisplay}
-      <BrowserRouter>
 
-        <Menu style={{ textAlign:"center" }} selectedKeys={[route]} mode="horizontal">
-          <Menu.Item key="/">
-            <Link onClick={()=>{setRoute("/")}} to="/">Staker UI</Link>
-          </Menu.Item>
-        </Menu>
+      <main>
+        <BrowserRouter>
 
-        <Switch>
-          <Route exact path="/">
+          <Switch>
+            <Route exact path="/">
 
-          {completeDisplay}
+            {completeDisplay}
 
-          <div style={{padding:8,marginTop:32}}>
-            <div>Timeleft:</div>
-            {console.log(timeLeft)}
-            {timeLeft && humanizeDuration(timeLeft.toNumber()*1000)}
-          </div>
+            <div style={{padding:8,marginTop:32}}>
+              <div>Timeleft:</div>
+              {console.log(timeLeft)}
+              {timeLeft && humanizeDuration(timeLeft.toNumber()*1000)}
+            </div>
 
-          <div style={{padding:8}}>
-            <div>Total staked:</div>
-            <Balance
-              balance={stakerContractBalance}
-              fontSize={64}
-            />/<Balance
-              balance={threshold}
-              fontSize={64}
-            />
-          </div>
-
-
-          <div style={{padding:8}}>
-            <div>You staked:</div>
-            <Balance
-              balance={balanceStaked}
-              fontSize={64}
-            />
-          </div>
-
-
-          <div style={{padding:8}}>
-            <Button type={"default"} onClick={()=>{
-              tx( writeContracts.Staker.execute() )
-            }}>📡  Execute!</Button>
-            {generateExecutionFeedbackHTML()}
-          </div>
-
-          <div style={{padding:8}}>
-            <Button type={"default"} onClick={()=>{
-              tx( writeContracts.Staker.withdraw() )
-            }}>🏧  Withdraw</Button>
-          </div>
-
-          <div style={{padding:8}}>
-            <Button type={ balanceStaked ? "success" : "primary"} onClick={()=>{
-              tx( writeContracts.Staker.stake(parseEther("0.5")) )
-            }}>🥩  Stake 0.5 ether!</Button>
-          </div>
-
-
-
-            {/*
-                🎛 this scaffolding is full of commonly used components
-                this <Contract/> component will automatically parse your ABI
-                and give you a form to interact with it locally
-            */}
-
-            <div style={{width:500, margin:"auto",marginTop:64}}>
-              <div>Stake Events:</div>
-              <List
-                dataSource={stakeEvents}
-                renderItem={(item) => {
-                  return (
-                    <List.Item key={item[0]+item[1]+item.blockNumber}>
-                      <Address
-                          value={item[0]}
-                          ensProvider={mainnetProvider}
-                          fontSize={16}
-                        /> =>
-                        <Balance
-                          balance={item[1]}
-
-                        />
-
-                    </List.Item>
-                  )
-                }}
+            <div style={{padding:8}}>
+              <div>Total staked:</div>
+              <Balance
+                balance={stakerContractBalance}
+                fontSize={64}
+              />/<Balance
+                balance={threshold}
+                fontSize={64}
               />
             </div>
 
 
+            <div style={{padding:8}}>
+              <div>You staked:</div>
+              <Balance
+                balance={balanceStaked}
+                fontSize={64}
+              />
+            </div>
 
 
-            { /* uncomment for a second contract:
-            <Contract
-              name="SecondContract"
-              signer={userProvider.getSigner()}
-              provider={localProvider}
-              address={address}
-              blockExplorer={blockExplorer}
-            />
-            */ }
+            <div style={{padding:8}}>
+              <Button type={"default"} onClick={()=>{
+                tx( writeContracts.Staker.execute() )
+              }}>📡  Execute!</Button>
+              {generateExecutionFeedbackHTML()}
+            </div>
 
-            { /* Uncomment to display and interact with an external contract (DAI on mainnet):
-            <Contract
-              name="DAI"
-              customContract={mainnetDAIContract}
-              signer={userProvider.getSigner()}
-              provider={mainnetProvider}
-              address={address}
-              blockExplorer={blockExplorer}
-            />
-            */ }
-          </Route>
-          <Route path="/contracts">
-            <Contract
-              name="Staker"
-              signer={userProvider.getSigner()}
-              provider={localProvider}
-              address={address}
-              blockExplorer={blockExplorer}
-            />
-            <Contract
-              name="ExampleExternalContract"
-              signer={userProvider.getSigner()}
-              provider={localProvider}
-              address={address}
-              blockExplorer={blockExplorer}
-            />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+            <div style={{padding:8}}>
+              <Button type={"default"} onClick={()=>{
+                tx( writeContracts.Staker.withdraw() )
+              }}>🏧  Withdraw</Button>
+            </div>
 
+            <div style={{padding:8}}>
+              <Button type={ balanceStaked ? "success" : "primary"} onClick={()=>{
+                tx( writeContracts.Staker.stake(parseEther("0.5")) )
+              }}>🥩  Stake 0.5 ether!</Button>
+            </div>
+
+
+
+              {/*
+                  🎛 this scaffolding is full of commonly used components
+                  this <Contract/> component will automatically parse your ABI
+                  and give you a form to interact with it locally
+              */}
+
+              <div style={{width:500, margin:"auto",marginTop:64}}>
+                <div>Stake Events:</div>
+                <List
+                  dataSource={stakeEvents}
+                  renderItem={(item) => {
+                    return (
+                      <List.Item key={item[0]+item[1]+item.blockNumber}>
+                        <Address
+                            value={item[0]}
+                            ensProvider={mainnetProvider}
+                            fontSize={16}
+                          /> =>
+                          <Balance
+                            balance={item[1]}
+
+                          />
+
+                      </List.Item>
+                    )
+                  }}
+                />
+              </div>
+
+
+
+
+              { /* uncomment for a second contract:
+              <Contract
+                name="SecondContract"
+                signer={userProvider.getSigner()}
+                provider={localProvider}
+                address={address}
+                blockExplorer={blockExplorer}
+              />
+              */ }
+
+              { /* Uncomment to display and interact with an external contract (DAI on mainnet):
+              <Contract
+                name="DAI"
+                customContract={mainnetDAIContract}
+                signer={userProvider.getSigner()}
+                provider={mainnetProvider}
+                address={address}
+                blockExplorer={blockExplorer}
+              />
+              */ }
+            </Route>
+            <Route path="/contracts">
+              <Contract
+                name="Staker"
+                signer={userProvider.getSigner()}
+                provider={localProvider}
+                address={address}
+                blockExplorer={blockExplorer}
+              />
+              <Contract
+                name="ExampleExternalContract"
+                signer={userProvider.getSigner()}
+                provider={localProvider}
+                address={address}
+                blockExplorer={blockExplorer}
+              />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </main>
 
       {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
 

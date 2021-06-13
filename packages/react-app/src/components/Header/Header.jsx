@@ -63,7 +63,8 @@ export default function Header(props) {
   }
 
   return (
-    <>
+    // since PageHeader was used as the Header, use div for now
+    <div className='header'>
       <a href="/" /*target="_blank" rel="noopener noreferrer"*/>
         <PageHeader
           title="Staking App Demo"
@@ -86,7 +87,7 @@ export default function Header(props) {
          />
          {faucetHint}
       </div>
-    </>
+    </div>
   );
 }
 
