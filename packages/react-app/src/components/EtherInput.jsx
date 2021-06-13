@@ -1,42 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "antd";
 
-/*
-<EtherInput
-  price={props.price}
-  value={amount}
-  onChange={value => {
-    setAmount(value);
-  }}
-/>
-*/
-
 export default function EtherInput(props) {
-  const [mode, setMode] = useState(props.price ? "USD" : "ETH");
-  const [display, setDisplay] = useState();
-  const [value, setValue] = useState();
+  const { autoFocus, name, price } = props;
 
-  const currentValue = typeof props.value !== "undefined" ? props.value : value;
+  const [mode, setMode] = useState('USD');
+  const [value, setValue] = useState(null);
 
   const option = title => {
-    if (!props.price) return "";
     return (
       <div
         style={{ cursor: "pointer" }}
-        onClick={() => {
-          if (mode === "USD") {
-            setMode("ETH");
-            setDisplay(currentValue);
-          } else {
-            setMode("USD");
-            if (currentValue) {
-              const usdValue = "" + (parseFloat(currentValue) * props.price).toFixed(2);
-              setDisplay(usdValue);
-            } else {
-              setDisplay(currentValue);
-            }
-          }
-        }}
+        onClick={() => convert()}
       >
         {title}
       </div>
@@ -53,38 +28,44 @@ export default function EtherInput(props) {
     addonAfter = option("ETH 🔀");
   }
 
-  useEffect(
-    ()=>{
-      if(!currentValue){
-        setDisplay("");
-      }
-    }
-  ,[ currentValue ])
+  useEffect(() => {
+
+  },[])
+
+  const convert = () => {
+    const newMode =
+      mode === 'USD'
+      ? 'ETH'
+      : 'USD';
+
+    const newValue =
+      newMode === 'USD'
+      ? value * price
+      : value / price;
+
+    setValue(newValue);
+    setMode(newMode);
+  }
+
+  const onChangeHandler = async e => {
+    const newValue = e.target.value;
+    const setValueFigure
+      = mode === "ETH"
+      ? newValue / price
+      : newValue;
+
+    setValue(setValueFigure);
+  }
 
   return (
     <Input
-      placeholder={props.placeholder ? props.placeholder : "amount in " + mode}
-      autoFocus={props.autoFocus}
+      placeholder={"amount in " + mode}
+      autoFocus={autoFocus}
       prefix={prefix}
-      value={display}
+      value={value}
       addonAfter={addonAfter}
-      onChange={async e => {
-        const newValue = e.target.value;
-        if (mode === "USD") {
-          const ethValue = parseFloat(newValue) / props.price;
-          setValue(ethValue);
-          if (typeof props.onChange === "function") {
-            props.onChange(ethValue);
-          }
-          setDisplay(newValue);
-        } else {
-          setValue(newValue);
-          if (typeof props.onChange === "function") {
-            props.onChange(newValue);
-          }
-          setDisplay(newValue);
-        }
-      }}
+      onChange={onChangeHandler}
+      name={name}
     />
   );
 }

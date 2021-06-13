@@ -255,6 +255,7 @@ function App(props) {
             <UserStake
               balanceStaked={balanceStaked}
               stakerContractBalance={stakerContractBalance}
+              price={price}
             />
 
             <div style={{padding:8}}>
@@ -307,29 +308,6 @@ function App(props) {
                 />
               </div>
 
-
-
-
-              { /* uncomment for a second contract:
-              <Contract
-                name="SecondContract"
-                signer={userProvider.getSigner()}
-                provider={localProvider}
-                address={address}
-                blockExplorer={blockExplorer}
-              />
-              */ }
-
-              { /* Uncomment to display and interact with an external contract (DAI on mainnet):
-              <Contract
-                name="DAI"
-                customContract={mainnetDAIContract}
-                signer={userProvider.getSigner()}
-                provider={mainnetProvider}
-                address={address}
-                blockExplorer={blockExplorer}
-              />
-              */ }
             </Route>
             <Route path="/contracts">
               <Contract

@@ -1,8 +1,9 @@
 import React from 'react';
 import Balance from '../../components/Balance.jsx';
 import './UserStake.css';
+import EtherInput from '../../components/EtherInput.jsx';
 
-const userStake = ({ balanceStaked, stakerContractBalance }) => {
+const userStake = ({ balanceStaked, stakerContractBalance, price }) => {
   const userStakePercentage =
     stakerContractBalance || balanceStaked === 0
     ? 0
@@ -18,6 +19,14 @@ const userStake = ({ balanceStaked, stakerContractBalance }) => {
       <span className='user-stake-percentage'>
         {userStakePercentage}%
       </span>
+      <form>
+        <label htmlFor='user-stake-input'>Stake</label>
+        <EtherInput
+          autoFocus={false}
+          name='user-stake-input'
+          price={price}
+        />
+      </form>
     </div>
   );
 }
