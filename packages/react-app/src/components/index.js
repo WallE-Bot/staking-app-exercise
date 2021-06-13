@@ -15,3 +15,4 @@ export { default as Timeline } from "./Timeline";
 export { default as GasGauge } from "./GasGauge";
 export { default as TotalStaked } from "./TotalStaked/TotalStaked.jsx";
 export { default as TimeLeft } from "./TimeLeft/TimeLeft.jsx";
+export { default as UserStake } from "./UserStake/UserStake.jsx";

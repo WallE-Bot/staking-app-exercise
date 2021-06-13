@@ -8,7 +8,7 @@ import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { useUserAddress } from "eth-hooks";
 import { useExchangePrice, useGasPrice, useUserProvider, useContractLoader, useContractReader, useEventListener, useBalance, useExternalContractLoader } from "./hooks";
-import { Header, TotalStaked, TimeLeft, Account, Faucet, Ramp, Contract, GasGauge, Balance, Address } from "./components";
+import { Header, TotalStaked, TimeLeft, UserStake, Account, Faucet, Ramp, Contract, GasGauge, Balance, Address } from "./components";
 import { Transactor } from "./helpers";
 import { formatEther, parseEther, parseUnits } from "@ethersproject/units";
 import { Hints, ExampleUI, Subgraph } from "./views"
@@ -252,14 +252,10 @@ function App(props) {
               timeLeft={timeLeft}
             />
 
-            <div style={{padding:8}}>
-              <div>You staked:</div>
-              <Balance
-                balance={balanceStaked}
-                fontSize={64}
-              />
-            </div>
-
+            <UserStake
+              balanceStaked={balanceStaked}
+              stakerContractBalance={stakerContractBalance}
+            />
 
             <div style={{padding:8}}>
               <Button type={"default"} onClick={()=>{

@@ -1,0 +1,9 @@
+.user-stake {
+  border: .5px solid #eee;
+  width: 250px;
+  margin: 0 auto;
+}
+
+.user-stake-percentage {
+  font-size: 20px;
+}
