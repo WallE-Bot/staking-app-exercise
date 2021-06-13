@@ -229,7 +229,10 @@ function App(props) {
     <div className="App">
 
       {/* ✏️ Edit the header and change the title to your project name */}
-      <Header />
+      <Header
+        mainnetProvider={mainnetProvider}
+        localProvider={localProvider}
+      />
       {networkDisplay}
       <BrowserRouter>
 
@@ -366,20 +369,7 @@ function App(props) {
 
 
       {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
-      <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
-         <Account
-           address={address}
-           localProvider={localProvider}
-           userProvider={userProvider}
-           mainnetProvider={mainnetProvider}
-           price={price}
-           web3Modal={web3Modal}
-           loadWeb3Modal={loadWeb3Modal}
-           logoutOfWeb3Modal={logoutOfWeb3Modal}
-           blockExplorer={blockExplorer}
-         />
-         {faucetHint}
-      </div>
+
 
       <div style={{marginTop:32,opacity:0.5}}>Created by <Address
         value={"Your...address"}
