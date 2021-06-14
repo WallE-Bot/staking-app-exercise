@@ -1,4 +1,35 @@
 .stake-withdraw-panel {
-  border: 1px solid red;
-  width: 250px;
+  border: .5px solid #eee;
+  width: 350px;
+  margin: 0 auto;
+}
+
+.panel-form {
+  width: 100%;
+}
+
+.stake-withdraw-toggle {
+  width: 100%;
+  margin: 0;
+}
+
+.panel-toggle {
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+  border: .5px solid #eee;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.panel-submit {
+  margin: 10px auto;
+  background: white;
+  border: .5px solid #eee;
+  cursor: pointer;
+  padding: 5px 8px;
+}
+
+.selected {
+  background: #eee;
 }

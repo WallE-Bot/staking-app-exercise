@@ -11,8 +11,9 @@ export default function StakeWithdrawPanel({ price }) {
 
   }, []);
 
-  const togglePanelMode = e => {
-    const panelMode = e.target.value;
+  const togglePanelMode = type => {
+    const panelMode = type;
+    console.log(panelMode);
     setPanelMode(panelMode);
   }
 
@@ -23,11 +24,15 @@ export default function StakeWithdrawPanel({ price }) {
 
   const generatePanels = () => {
     return ['Stake', 'Withdraw'].map(type => {
+      const selected = panelMode === type
+        ? ' selected'
+        : '';
+
       return (
         <label
           key={uuid()}
-          className='panel-toggle'
-          onClick={togglePanelMode}
+          className={`panel-toggle${selected}`}
+          onClick={() => togglePanelMode(type)}
           htmlFor={type.toLowerCase()}
         >
           {type}
@@ -36,15 +41,23 @@ export default function StakeWithdrawPanel({ price }) {
     })
   }
 
+  const handleFormSubmit = e => {
+    e.preventDefault();
+  }
+
   const generatePanelForm = () => {
     return (
-      <form>
-        <label htmlFor='user-stake-input'>{panelMode}</label>
+      <form className='panel-form'>
         {/* modify input for withdrawal constraints */}
         <EtherInput
           autoFocus={false}
           name={panelMode}
           price={price}
+        />
+        <input
+          className='panel-submit'
+          type='submit'
+          onSubmit={handleFormSubmit}
         />
       </form>
     );
