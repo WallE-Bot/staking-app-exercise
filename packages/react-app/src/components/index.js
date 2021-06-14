@@ -16,3 +16,4 @@ export { default as GasGauge } from "./GasGauge";
 export { default as TotalStaked } from "./TotalStaked/TotalStaked.jsx";
 export { default as TimeLeft } from "./TimeLeft/TimeLeft.jsx";
 export { default as UserStake } from "./UserStake/UserStake.jsx";
+export { default as StakeWithdrawPanel } from "./StakeWithdrawPanel/StakeWithdrawPanel.jsx";

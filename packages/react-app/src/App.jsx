@@ -7,8 +7,11 @@ import { Row, Col, Button, Menu, Alert, List } from "antd";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { useUserAddress } from "eth-hooks";
-import { useExchangePrice, useGasPrice, useUserProvider, useContractLoader, useContractReader, useEventListener, useBalance, useExternalContractLoader } from "./hooks";
-import { Header, TotalStaked, TimeLeft, UserStake, Account, Faucet, Ramp, Contract, GasGauge, Balance, Address } from "./components";
+import { useExchangePrice, useGasPrice, useUserProvider, useContractLoader,
+         useContractReader, useEventListener, useBalance,
+         useExternalContractLoader} from "./hooks";
+import { Header, TotalStaked, TimeLeft, UserStake, Account, Faucet,
+         Ramp, Contract, GasGauge, Balance, Address, StakeWithdrawPanel } from "./components";
 import { Transactor } from "./helpers";
 import { formatEther, parseEther, parseUnits } from "@ethersproject/units";
 import { Hints, ExampleUI, Subgraph } from "./views"
@@ -255,6 +258,10 @@ function App(props) {
             <UserStake
               balanceStaked={balanceStaked}
               stakerContractBalance={stakerContractBalance}
+              price={price}
+            />
+
+            <StakeWithdrawPanel
               price={price}
             />
 

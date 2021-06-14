@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "antd";
 
+// modify for withdrawal constraints
 export default function EtherInput(props) {
   const { autoFocus, name, price } = props;
 
