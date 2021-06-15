@@ -2,14 +2,27 @@ import React, { useState, useEffect } from 'react';
 import './StakeWithdrawPanel.css';
 import EtherInput from '../../components/EtherInput.jsx';
 import { uuid } from 'uuidv4';
+import { parseEther } from "@ethersproject/units";
 
-export default function StakeWithdrawPanel({ price }) {
+export default function StakeWithdrawPanel({
+    price,
+    withdrawFunction,
+    stakeFunction
+  }) {
 
   const [panelMode, setPanelMode] = useState('Stake');
+  // form input value for controlled form
+  // convert to Ether for parseEther - modify later
+  // when move to controlled form and externalizing state
+  const [valueInEther, setValueInEther] = useState('0');
 
   useEffect(() => {
 
   }, []);
+
+  const handleInputChange = (value) => {
+    setValueInEther(value);
+  }
 
   const togglePanelMode = type => {
     const panelMode = type;
@@ -41,23 +54,38 @@ export default function StakeWithdrawPanel({ price }) {
     })
   }
 
+  // no price change confirmation before processing amount
   const handleFormSubmit = e => {
     e.preventDefault();
+    const etherValue = parseEther(valueInEther+'');
+
+    // if in stake mode
+    if (panelMode == 'Stake') {
+      stakeFunction(etherValue);
+    };
+
+    // if in withdraw mode
+    if (panelMode === 'Withdraw') {
+      withdrawFunction(etherValue);
+    }
   }
 
   const generatePanelForm = () => {
     return (
-      <form className='panel-form'>
+      <form
+        className='panel-form'
+        onSubmit={handleFormSubmit}
+      >
         {/* modify input for withdrawal constraints */}
         <EtherInput
           autoFocus={false}
           name={panelMode}
           price={price}
+          onChangeHandler={handleInputChange}
         />
         <input
           className='panel-submit'
           type='submit'
-          onSubmit={handleFormSubmit}
         />
       </form>
     );
