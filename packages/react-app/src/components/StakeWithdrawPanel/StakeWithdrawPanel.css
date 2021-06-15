@@ -20,6 +20,7 @@
   border: .5px solid #eee;
   cursor: pointer;
   padding: 5px;
+  background: #eee;
 }
 
 .panel-submit {
@@ -31,5 +32,5 @@
 }
 
 .selected {
-  background: #eee;
+  background: white;
 }
