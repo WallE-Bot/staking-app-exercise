@@ -29,7 +29,6 @@ contract Staker {
   // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
   //  ( make sure to add a `Stake(address,uint256)` event and emit it for the frontend <List/> display )
   function stake(uint amount) external payable withinDeadline {
-    console.log('stake amount', amount);
     balances[msg.sender] += amount;
     emit Stake(msg.sender, amount);
   }
@@ -49,6 +48,7 @@ contract Staker {
   }
 
   // if the `threshold` was not met, allow everyone to call a `withdraw()` function
+  // modify for specific withdrawal amount
   function withdraw() public notCompleted {
     require(timeLeft() <= 0, "Time still remaining to meet staking treshold");
     require(balances[msg.sender] > 0, "address balance is 0");

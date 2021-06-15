@@ -238,12 +238,14 @@ function App(props) {
       {networkDisplay}
 
       <main>
+
+        {/* maintain router for now in case needed */}
         <BrowserRouter>
 
           <Switch>
             <Route exact path="/">
 
-            {/* notification bar for threshold met*/}
+            {/* notification bar for threshold met - move later*/}
             {completeDisplay}
 
             <TotalStaked
@@ -263,6 +265,8 @@ function App(props) {
 
             <StakeWithdrawPanel
               price={price}
+              withdrawFunction={ () => tx( writeContracts.Staker.withdraw()) }
+              stakeFunction = { (amount) => tx( writeContracts.Staker.stake(amount) ) }
             />
 
             <div style={{padding:8}}>
@@ -271,20 +275,6 @@ function App(props) {
               }}>📡  Execute!</Button>
               {generateExecutionFeedbackHTML()}
             </div>
-
-            <div style={{padding:8}}>
-              <Button type={"default"} onClick={()=>{
-                tx( writeContracts.Staker.withdraw() )
-              }}>🏧  Withdraw</Button>
-            </div>
-
-            <div style={{padding:8}}>
-              <Button type={ balanceStaked ? "success" : "primary"} onClick={()=>{
-                tx( writeContracts.Staker.stake(parseEther("0.5")) )
-              }}>🥩  Stake 0.5 ether!</Button>
-            </div>
-
-
 
               {/*
                   🎛 this scaffolding is full of commonly used components

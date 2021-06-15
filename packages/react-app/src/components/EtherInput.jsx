@@ -3,7 +3,7 @@ import { Input } from "antd";
 
 // modify for withdrawal constraints
 export default function EtherInput(props) {
-  const { autoFocus, name, price } = props;
+  const { autoFocus, name, price, onChangeHandler } = props;
 
   const [mode, setMode] = useState('USD');
   const [value, setValue] = useState(null);
@@ -48,7 +48,7 @@ export default function EtherInput(props) {
     setMode(newMode);
   }
 
-  const onChangeHandler = async e => {
+  const handleInputChange = e => {
     const newValue = e.target.value;
     const setValueFigure
       = mode === "ETH"
@@ -56,6 +56,10 @@ export default function EtherInput(props) {
       : newValue;
 
     setValue(setValueFigure);
+    // current architecture has state internal atm, less friction to
+    // maintain current pattern then externalize state and move to
+    // more controlled form later
+    onChangeHandler(value, mode);
   }
 
   return (
@@ -65,7 +69,7 @@ export default function EtherInput(props) {
       prefix={prefix}
       value={value}
       addonAfter={addonAfter}
-      onChange={onChangeHandler}
+      onChange={handleInputChange}
       name={name}
     />
   );
