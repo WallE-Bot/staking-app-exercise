@@ -44,22 +44,22 @@ export default function EtherInput(props) {
       ? value * price
       : value / price;
 
-    setValue(newValue);
+    setValue(newValue.toString());
     setMode(newMode);
   }
 
   const handleInputChange = e => {
     const newValue = e.target.value;
-    const setValueFigure
-      = mode === "ETH"
-      ? newValue / price
+    const ethValue
+      = mode === "USD"
+      ? parseFloat(newValue) / price
       : newValue;
 
-    setValue(setValueFigure);
+    setValue(newValue);
     // current architecture has state internal atm, less friction to
     // maintain current pattern then externalize state and move to
     // more controlled form later
-    onChangeHandler(value, mode);
+    onChangeHandler(ethValue);
   }
 
   return (

@@ -20,13 +20,8 @@ export default function StakeWithdrawPanel({
 
   }, []);
 
-  const handleInputChange = (value, mode) => {
-    const convertedValue =
-      mode === 'ETH'
-      ? value
-      : value / price;
-
-    setValueInEther(convertedValue);
+  const handleInputChange = (value) => {
+    setValueInEther(value);
   }
 
   const togglePanelMode = type => {
@@ -59,9 +54,10 @@ export default function StakeWithdrawPanel({
     })
   }
 
+  // no price change confirmation before processing amount
   const handleFormSubmit = e => {
     e.preventDefault();
-    const etherValue = parseEther(valueInEther.toString());
+    const etherValue = parseEther(valueInEther+'');
 
     // if in stake mode
     if (panelMode == 'Stake') {
