@@ -3,18 +3,16 @@ import './StakeWithdrawPanel.css';
 import EtherInput from '../../components/EtherInput.jsx';
 import { PercentageModButton } from '../../components/';
 import { uuid } from 'uuidv4';
-import { parseEther } from "@ethersproject/units";
+import { parseEther, formatEther } from "@ethersproject/units";
 
 export default function StakeWithdrawPanel({
     price,
     withdrawFunction,
-    stakeFunction
+    stakeFunction,
+    userBalance
   }) {
 
   const [panelMode, setPanelMode] = useState('Stake');
-  // form input value for controlled form
-  // convert to Ether for parseEther - modify later
-  // when move to controlled form and externalizing state
   const [mode, setMode] = useState('USD');
   const [value, setValue] = useState(null);
 
@@ -77,8 +75,14 @@ export default function StakeWithdrawPanel({
     }
   }
 
+  // modify - wallet balance for staking, current staked balance for withdrawing
   const handlePercentileClick = percentile => {
-    const newValue = value * percentile;
+    const walletEtherBalance = formatEther(userBalance);
+    const convertedBalance = mode === 'USD'
+      ? walletEtherBalance * price
+      : walletEtherBalance;
+
+    const newValue = convertedBalance * percentile;
     setValue(newValue);
     console.log(newValue);
   }

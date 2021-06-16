@@ -267,6 +267,7 @@ function App(props) {
               price={price}
               withdrawFunction={ (amount) => tx( writeContracts.Staker.withdraw(amount)) }
               stakeFunction = { (amount) => tx( writeContracts.Staker.stake(amount) ) }
+              userBalance={yourLocalBalance}
             />
 
             <div style={{padding:8}}>
