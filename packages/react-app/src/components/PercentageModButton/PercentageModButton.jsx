@@ -1,15 +1,16 @@
 import React from 'react';
+import './PercentageModButton.css';
 
 const percentageModButton = ({ percentile, onClickHandler }) => {
   const percentileString = percentile * 100 + '%';
 
   return (
-    <button
+    <input
       className='percentage-mod-button'
-      onClick={onClickHandler(percentile)}
-    >
-      {percentileString}
-    </button>
+      onClick={() => onClickHandler()}
+      type='button'
+      value={percentileString}
+    />
   );
 
 };

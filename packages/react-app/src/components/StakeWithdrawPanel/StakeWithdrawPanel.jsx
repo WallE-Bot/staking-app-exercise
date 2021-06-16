@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './StakeWithdrawPanel.css';
 import EtherInput from '../../components/EtherInput.jsx';
-import PercentageModButton from '../../components/PercentageModButton.jsx';
+import { PercentageModButton } from '../../components/';
 import { uuid } from 'uuidv4';
 import { parseEther } from "@ethersproject/units";
 
@@ -71,18 +71,19 @@ export default function StakeWithdrawPanel({
     }
   }
 
-  const onClickHandler = percentile => {
-    const newValueInEther = valueInEther * percentile
-    setValueInEther(newValueInEther)
+  const handlePercentileClick = percentile => {
+    const newValueInEther = valueInEther * percentile;
+    setValueInEther(newValueInEther);
+    console.log(valueInEther);
   }
 
   const generatePercentageModButtons = () => {
     return [.25, .5, .75, 1].map(percentile => {
       return (
-        <PercentageModbutton
+        <PercentageModButton
           key={uuid()}
           percentile={percentile}
-          onClickHandler={onClickHandler}
+          onClickHandler={() => handlePercentileClick(percentile)}
         />
       )
     });
