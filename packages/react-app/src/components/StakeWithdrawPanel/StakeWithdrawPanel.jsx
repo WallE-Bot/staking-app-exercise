@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import './StakeWithdrawPanel.css';
 import EtherInput from '../../components/EtherInput.jsx';
+import { PercentageModButton } from '../../components/';
 import { uuid } from 'uuidv4';
-import { parseEther } from "@ethersproject/units";
+import { parseEther, formatEther } from "@ethersproject/units";
 
 export default function StakeWithdrawPanel({
     price,
     withdrawFunction,
-    stakeFunction
+    stakeFunction,
+    userBalance,
+    balanceStaked
   }) {
 
   const [panelMode, setPanelMode] = useState('Stake');
-  // form input value for controlled form
-  // convert to Ether for parseEther - modify later
-  // when move to controlled form and externalizing state
-  const [valueInEther, setValueInEther] = useState('0');
+  const [mode, setMode] = useState('USD');
+  const [value, setValue] = useState(null);
 
   useEffect(() => {
 
   }, []);
 
-  const handleInputChange = (value) => {
-    setValueInEther(value);
-  }
-
   const togglePanelMode = type => {
     const panelMode = type;
-    console.log(panelMode);
+    // reset input when panel type changes
+    if (panelMode === 'Withdraw') {
+      setValue(null);
+    }
     setPanelMode(panelMode);
-  }
-
-  const handlePanelClick = e => {
-    const panelMode = e.target.value;
-    setPanelMode()
   }
 
   const generatePanels = () => {
@@ -54,10 +49,19 @@ export default function StakeWithdrawPanel({
     })
   }
 
+  const calculateEtherValue = () => {
+    const etherValue
+      = mode === "USD"
+      ? parseFloat(value) / price
+      : value;
+
+    return etherValue;
+  }
+
   // no price change confirmation before processing amount
   const handleFormSubmit = e => {
     e.preventDefault();
-    const etherValue = parseEther(valueInEther+'');
+    const etherValue = parseEther(calculateEtherValue()+'');
 
     // if in stake mode
     if (panelMode == 'Stake') {
@@ -68,6 +72,51 @@ export default function StakeWithdrawPanel({
     if (panelMode === 'Withdraw') {
       withdrawFunction(etherValue);
     }
+  }
+
+  // modify - wallet balance for staking, current staked balance for withdrawing
+  const handlePercentileClick = percentile => {
+    const formattedEtherBalance =
+      panelMode === 'Stake'
+      ? formatEther(userBalance)
+      : formatEther(balanceStaked);
+
+    const convertedBalance = mode === 'USD'
+      ? formattedEtherBalance * price
+      : formattedEtherBalance;
+
+    const newValue = convertedBalance * percentile;
+    setValue(newValue);
+    console.log(newValue);
+  }
+
+  const handleModeChange = () => {
+    console.log('here');
+    const newMode =
+      mode === 'USD'
+      ? 'ETH'
+      : 'USD';
+
+    const newValue =
+      newMode === 'USD'
+      ? value * price
+      : value / price;
+
+    setValue(newValue.toString());
+    setMode(newMode);
+    console.log(newValue);
+  }
+
+  const generatePercentageModButtons = () => {
+    return [.25, .5, .75, 1].map(percentile => {
+      return (
+        <PercentageModButton
+          key={uuid()}
+          percentile={percentile}
+          onClickHandler={handlePercentileClick}
+        />
+      )
+    });
   }
 
   const generatePanelForm = () => {
@@ -81,8 +130,13 @@ export default function StakeWithdrawPanel({
           autoFocus={false}
           name={panelMode}
           price={price}
-          onChangeHandler={handleInputChange}
+          setMode={setMode}
+          setValue={setValue}
+          onModeChangeHandler={handleModeChange}
+          value={value}
+          mode={mode}
         />
+        {generatePercentageModButtons()}
         <input
           className='panel-submit'
           type='submit'

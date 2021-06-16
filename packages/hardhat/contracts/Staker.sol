@@ -49,12 +49,11 @@ contract Staker {
 
   // if the `threshold` was not met, allow everyone to call a `withdraw()` function
   // modify for specific withdrawal amount
-  function withdraw() public notCompleted {
-    require(timeLeft() <= 0, "Time still remaining to meet staking treshold");
-    require(balances[msg.sender] > 0, "address balance is 0");
+  function withdraw(uint256 amount) public notCompleted {
+    uint balance = balances[msg.sender];
+    require(balance > 0 && balance <= amount, "address balance insufficient");
 
     // allow withdrawal
-    uint balance = balances[msg.sender];
     balances[msg.sender] = 0;
     msg.sender.transfer(balance);
   }
