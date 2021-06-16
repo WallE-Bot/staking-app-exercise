@@ -9,7 +9,8 @@ export default function StakeWithdrawPanel({
     price,
     withdrawFunction,
     stakeFunction,
-    userBalance
+    userBalance,
+    balanceStaked
   }) {
 
   const [panelMode, setPanelMode] = useState('Stake');
@@ -22,13 +23,11 @@ export default function StakeWithdrawPanel({
 
   const togglePanelMode = type => {
     const panelMode = type;
-    console.log(panelMode);
+    // reset input when panel type changes
+    if (panelMode === 'Withdraw') {
+      setValue(null);
+    }
     setPanelMode(panelMode);
-  }
-
-  const handlePanelClick = e => {
-    const panelMode = e.target.value;
-    setPanelMode()
   }
 
   const generatePanels = () => {
@@ -77,10 +76,14 @@ export default function StakeWithdrawPanel({
 
   // modify - wallet balance for staking, current staked balance for withdrawing
   const handlePercentileClick = percentile => {
-    const walletEtherBalance = formatEther(userBalance);
+    const formattedEtherBalance =
+      panelMode === 'Stake'
+      ? formatEther(userBalance)
+      : formatEther(balanceStaked);
+
     const convertedBalance = mode === 'USD'
-      ? walletEtherBalance * price
-      : walletEtherBalance;
+      ? formattedEtherBalance * price
+      : formattedEtherBalance;
 
     const newValue = convertedBalance * percentile;
     setValue(newValue);
