@@ -15,15 +15,12 @@ export default function StakeWithdrawPanel({
   // form input value for controlled form
   // convert to Ether for parseEther - modify later
   // when move to controlled form and externalizing state
-  const [valueInEther, setValueInEther] = useState('0');
+  const [mode, setMode] = useState('USD');
+  const [value, setValue] = useState(null);
 
   useEffect(() => {
 
   }, []);
-
-  const handleInputChange = (value) => {
-    setValueInEther(value);
-  }
 
   const togglePanelMode = type => {
     const panelMode = type;
@@ -55,10 +52,19 @@ export default function StakeWithdrawPanel({
     })
   }
 
+  const calculateEtherValue = () => {
+    const etherValue
+      = mode === "USD"
+      ? parseFloat(value) / price
+      : value;
+
+    return etherValue;
+  }
+
   // no price change confirmation before processing amount
   const handleFormSubmit = e => {
     e.preventDefault();
-    const etherValue = parseEther(valueInEther+'');
+    const etherValue = parseEther(calculateEtherValue()+'');
 
     // if in stake mode
     if (panelMode == 'Stake') {
@@ -72,9 +78,26 @@ export default function StakeWithdrawPanel({
   }
 
   const handlePercentileClick = percentile => {
-    const newValueInEther = valueInEther * percentile;
-    setValueInEther(newValueInEther);
-    console.log(valueInEther);
+    const newValue = value * percentile;
+    setValue(newValue);
+    console.log(newValue);
+  }
+
+  const handleModeChange = () => {
+    console.log('here');
+    const newMode =
+      mode === 'USD'
+      ? 'ETH'
+      : 'USD';
+
+    const newValue =
+      newMode === 'USD'
+      ? value * price
+      : value / price;
+
+    setValue(newValue.toString());
+    setMode(newMode);
+    console.log(newValue);
   }
 
   const generatePercentageModButtons = () => {
@@ -83,7 +106,7 @@ export default function StakeWithdrawPanel({
         <PercentageModButton
           key={uuid()}
           percentile={percentile}
-          onClickHandler={() => handlePercentileClick(percentile)}
+          onClickHandler={handlePercentileClick}
         />
       )
     });
@@ -100,7 +123,11 @@ export default function StakeWithdrawPanel({
           autoFocus={false}
           name={panelMode}
           price={price}
-          onChangeHandler={handleInputChange}
+          setMode={setMode}
+          setValue={setValue}
+          onModeChangeHandler={handleModeChange}
+          value={value}
+          mode={mode}
         />
         {generatePercentageModButtons()}
         <input

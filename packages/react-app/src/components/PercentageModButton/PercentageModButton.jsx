@@ -7,7 +7,7 @@ const percentageModButton = ({ percentile, onClickHandler }) => {
   return (
     <input
       className='percentage-mod-button'
-      onClick={() => onClickHandler()}
+      onClick={() => onClickHandler(percentile)}
       type='button'
       value={percentileString}
     />
