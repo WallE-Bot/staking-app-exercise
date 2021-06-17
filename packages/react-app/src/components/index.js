@@ -18,3 +18,4 @@ export { default as TimeLeft } from "./TimeLeft/TimeLeft.jsx";
 export { default as UserStake } from "./UserStake/UserStake.jsx";
 export { default as StakeWithdrawPanel } from "./StakeWithdrawPanel/StakeWithdrawPanel.jsx";
 export { default as PercentageModButton } from "./PercentageModButton/PercentageModButton.jsx";
+export { default as Execute } from "./Execute/Execute.jsx";

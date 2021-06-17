@@ -1,0 +1,9 @@
+.execute-button {
+  margin-top: 25px;
+  background: black;
+  border: 0;
+  color: #eee;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}

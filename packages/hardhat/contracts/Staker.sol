@@ -51,7 +51,8 @@ contract Staker {
   // modify for specific withdrawal amount
   function withdraw(uint256 amount) public notCompleted {
     uint balance = balances[msg.sender];
-    require(balance > 0 && balance <= amount, "address balance insufficient");
+    console.log(amount, balance);
+    require(balance > 0 && balance >= amount, "address balance insufficient");
 
     // allow withdrawal
     balances[msg.sender] = 0;

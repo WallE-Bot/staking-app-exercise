@@ -11,7 +11,8 @@ import { useExchangePrice, useGasPrice, useUserProvider, useContractLoader,
          useContractReader, useEventListener, useBalance,
          useExternalContractLoader} from "./hooks";
 import { Header, TotalStaked, TimeLeft, UserStake, Account, Faucet,
-         Ramp, Contract, GasGauge, Balance, Address, StakeWithdrawPanel } from "./components";
+         Ramp, Contract, GasGauge, Balance, Address, StakeWithdrawPanel,
+         Execute } from "./components";
 import { Transactor } from "./helpers";
 import { formatEther, parseEther, parseUnits } from "@ethersproject/units";
 import { Hints, ExampleUI, Subgraph } from "./views"
@@ -257,6 +258,11 @@ function App(props) {
               timeLeft={timeLeft}
             />
 
+            <Execute
+              onClickHandler={() => tx( writeContracts.Staker.exeucte() )}
+              timeLeft={timeLeft}
+            />
+
             <UserStake
               balanceStaked={balanceStaked}
               stakerContractBalance={stakerContractBalance}
@@ -270,13 +276,6 @@ function App(props) {
               userBalance={yourLocalBalance}
               balanceStaked={balanceStaked}
             />
-
-            <div style={{padding:8}}>
-              <Button type={"default"} onClick={()=>{
-                tx( writeContracts.Staker.execute() )
-              }}>📡  Execute!</Button>
-              {generateExecutionFeedbackHTML()}
-            </div>
 
               {/*
                   🎛 this scaffolding is full of commonly used components
