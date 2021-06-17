@@ -20,3 +20,4 @@ export { default as StakeWithdrawPanel } from "./StakeWithdrawPanel/StakeWithdra
 export { default as PercentageModButton } from "./PercentageModButton/PercentageModButton.jsx";
 export { default as Execute } from "./Execute/Execute.jsx";
 export { default as WalletPanel } from "./WalletPanel/WalletPanel.jsx";
+export { default as FaucetPanel } from "./FaucetPanel/FaucetPanel.jsx";

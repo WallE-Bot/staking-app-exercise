@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "antd";
-import { Address, Balance, Wallet, Account } from "../../components";
+import { Account } from "../../components";
 import './WalletPanel.css';
 
+// make generic panel component
 export default function WalletPanel({
   address,
   userProvider,
