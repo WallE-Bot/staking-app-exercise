@@ -12,7 +12,7 @@ import { useExchangePrice, useGasPrice, useUserProvider, useContractLoader,
          useExternalContractLoader} from "./hooks";
 import { Header, TotalStaked, TimeLeft, UserStake, Faucet,
          Ramp, Contract, GasGauge, Balance, Address, StakeWithdrawPanel,
-         Execute, FaucetPanel } from "./components";
+         Execute, FaucetPanel, StakeEventsPanel } from "./components";
 import { Transactor } from "./helpers";
 import { formatEther, parseEther, parseUnits } from "@ethersproject/units";
 import { Hints, ExampleUI, Subgraph } from "./views"
@@ -249,6 +249,11 @@ function App(props) {
             {/* notification bar for threshold met - move later*/}
             {completeDisplay}
 
+            <StakeEventsPanel
+              stakeEvents={stakeEvents}
+              ensProvider={mainnetProvider}
+            />
+
             <TotalStaked
               stakerContractBalance={stakerContractBalance}
               threshold={threshold}
@@ -283,28 +288,7 @@ function App(props) {
                   and give you a form to interact with it locally
               */}
 
-              <div style={{width:500, margin:"auto",marginTop:64}}>
-                <div>Stake Events:</div>
-                <List
-                  dataSource={stakeEvents}
-                  renderItem={(item) => {
-                    return (
-                      <List.Item key={item[0]+item[1]+item.blockNumber}>
-                        <Address
-                            value={item[0]}
-                            ensProvider={mainnetProvider}
-                            fontSize={16}
-                          /> =>
-                          <Balance
-                            balance={item[1]}
 
-                          />
-
-                      </List.Item>
-                    )
-                  }}
-                />
-              </div>
 
             </Route>
             <Route path="/contracts">
