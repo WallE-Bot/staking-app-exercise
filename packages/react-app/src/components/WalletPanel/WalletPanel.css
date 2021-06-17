@@ -1,0 +1,30 @@
+.wallet-panel {
+  position: absolute;
+  top: -54px;
+  right: 25px;
+  width: 450px;
+  height: 150px;
+  z-index: 100 !important;
+  transition-property: top;
+  transition-duration: 1s;
+}
+
+.account {
+  border: .5px solid #eee;
+  padding: 5px 0;
+  border-radius: 0 0 5px 5px;
+}
+
+
+.wallet-panel-tab {
+  font-size: 16px;
+  border: .5px solid #eee;
+  border-top: 0;
+  border-radius: 0 0 5px 5px;
+  padding: 5px 20px;
+  cursor: pointer;
+}
+
+.collapsed {
+  top: 0;
+}

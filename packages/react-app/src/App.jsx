@@ -10,7 +10,7 @@ import { useUserAddress } from "eth-hooks";
 import { useExchangePrice, useGasPrice, useUserProvider, useContractLoader,
          useContractReader, useEventListener, useBalance,
          useExternalContractLoader} from "./hooks";
-import { Header, TotalStaked, TimeLeft, UserStake, Account, Faucet,
+import { Header, TotalStaked, TimeLeft, UserStake, Faucet,
          Ramp, Contract, GasGauge, Balance, Address, StakeWithdrawPanel,
          Execute } from "./components";
 import { Transactor } from "./helpers";

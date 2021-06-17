@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { PageHeader, Button } from "antd";
-import { Account, Address } from "../../components";
+import { Account, Address, WalletPanel } from "../../components";
 import {  JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import { useUserAddress } from "eth-hooks";
 import { useUserProvider, useExchangePrice, useBalance, useGasPrice } from "../../hooks";
@@ -44,24 +44,6 @@ export default function Header(props) {
     }
   }, [loadWeb3Modal]);
 
-  let faucetHint = "";
-  const [ faucetClicked, setFaucetClicked ] = useState( false );
-    if(!faucetClicked&&localProvider&&localProvider._network&&localProvider._network.chainId==31337&&yourLocalBalance&&formatEther(yourLocalBalance)<=0){
-    faucetHint = (
-      <div style={{padding:16}}>
-        <Button type={"primary"} onClick={()=>{
-          faucetTx({
-            to: address,
-            value: parseEther("0.01"),
-          });
-          setFaucetClicked(true)
-        }}>
-          💰 Grab funds from the faucet ⛽️
-        </Button>
-      </div>
-    )
-  }
-
   return (
     // since PageHeader was used as the Header, use div for now
     <div className='header'>
@@ -73,20 +55,18 @@ export default function Header(props) {
         />
       </a>
 
-      <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
-         <Account
-           address={address}
-           localProvider={localProvider}
-           userProvider={userProvider}
-           mainnetProvider={mainnetProvider}
-           price={price}
-           web3Modal={web3Modal}
-           loadWeb3Modal={loadWeb3Modal}
-           logoutOfWeb3Modal={logoutOfWeb3Modal}
-           blockExplorer={blockExplorer}
-         />
-         {faucetHint}
-      </div>
+      {/* wallet panel */}
+      <WalletPanel
+        address={address}
+        localProvider={localProvider}
+        userProvider={userProvider}
+        mainnetProvider={mainnetProvider}
+        price={price}
+        web3Modal={web3Modal}
+        loadWeb3Modal={loadWeb3Modal}
+        logoutOfWeb3Modal={logoutOfWeb3Modal}
+        blockExplorer={blockExplorer}
+      />
     </div>
   );
 }
