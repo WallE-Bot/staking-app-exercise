@@ -4,6 +4,7 @@ import { Button } from "antd";
 export default function GasGauge(props) {
   return (
     <Button
+      className='gas-gauge'
       onClick={() => {
         window.open("https://ethgasstation.info/");
       }}

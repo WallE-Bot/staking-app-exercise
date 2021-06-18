@@ -6,6 +6,7 @@ import { parseEther } from "@ethersproject/units";
 import { Transactor } from "../helpers";
 import Wallet from "./Wallet";
 
+{/* modify to own input, antd customization too restrictive */}
 export default function Faucet(props) {
   const [address, setAddress] = useState();
 
@@ -19,12 +20,13 @@ export default function Faucet(props) {
   const tx = Transactor(props.localProvider);
 
   return (
-    <span>
+    <span className='faucet'>
       <Input
-        size="large"
+        size="middle"
         placeholder="local faucet"
         prefix={blockie}
         value={address}
+        bordered={true}
         onChange={e => {
           setAddress(e.target.value);
         }}

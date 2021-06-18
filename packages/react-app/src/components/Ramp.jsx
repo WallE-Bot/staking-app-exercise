@@ -30,7 +30,7 @@ export default function Ramp(props) {
   }
 
   return (
-    <div>
+    <div className='ramp'>
       <Button
         size="large"
         shape="round"
