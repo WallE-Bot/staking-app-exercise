@@ -12,7 +12,7 @@ contract Staker {
   uint256 public deadline = now + 10 minutes;
   string public executionFeedback = '';
 
-  constructor(address exampleExternalContractAddress) public {
+  constructor(address exampleExternalContractAddress) public payable {
     exampleExternalContract = ExampleExternalContract(exampleExternalContractAddress);
   }
 
@@ -29,8 +29,10 @@ contract Staker {
   // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
   //  ( make sure to add a `Stake(address,uint256)` event and emit it for the frontend <List/> display )
   function stake(uint amount) external payable withinDeadline {
+    console.log(address(this).balance, amount, msg.value);
     balances[msg.sender] += amount;
     emit Stake(msg.sender, amount);
+    console.log(address(this).balance, amount, msg.value);
   }
 
   // After some `deadline` allow anyone to call an `execute()` function

@@ -10,7 +10,8 @@ export default function StakeWithdrawPanel({
     withdrawFunction,
     stakeFunction,
     userBalance,
-    balanceStaked
+    balanceStaked,
+    stakerContractBalance
   }) {
 
   const [panelMode, setPanelMode] = useState('Stake');
