@@ -204,24 +204,6 @@ function App(props) {
     setRoute(window.location.pathname)
   }, [setRoute]);
 
-  let faucetHint = ""
-  const [ faucetClicked, setFaucetClicked ] = useState( false );
-    if(!faucetClicked&&localProvider&&localProvider._network&&localProvider._network.chainId==31337&&yourLocalBalance&&formatEther(yourLocalBalance)<=0){
-    faucetHint = (
-      <div style={{padding:16}}>
-        <Button type={"primary"} onClick={()=>{
-          faucetTx({
-            to: address,
-            value: parseEther("0.01"),
-          });
-          setFaucetClicked(true)
-        }}>
-          💰 Grab funds from the faucet ⛽️
-        </Button>
-      </div>
-    )
-  }
-
   const generateExecutionFeedbackHTML = () => {
     return executionFeedback === ''
       ? ''
@@ -277,9 +259,10 @@ function App(props) {
             <StakeWithdrawPanel
               price={price}
               withdrawFunction={ (amount) => tx( writeContracts.Staker.withdraw(amount)) }
-              stakeFunction = { (amount) => tx( writeContracts.Staker.stake(amount) ) }
+              stakeFunction = { (amount) => tx( writeContracts.Staker.stake(amount, {value: amount}) ) }
               userBalance={yourLocalBalance}
               balanceStaked={balanceStaked}
+              stakerContractBalance={stakerContractBalance}
             />
 
               {/*
@@ -319,8 +302,6 @@ function App(props) {
         ensProvider={mainnetProvider}
         fontSize={16}
       /></div>
-
-      <div style={{marginTop:32,opacity:0.5}}><a target="_blank" style={{padding:32,color:"#000"}} href="https://github.com/austintgriffith/scaffold-eth">🍴 Fork me!</a></div>
 
         {
           /*  if the local provider has a signer, let's show the faucet:  move to function later*/
