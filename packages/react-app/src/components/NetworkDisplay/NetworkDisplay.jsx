@@ -11,7 +11,7 @@ const NetworkDisplay = ({
   const generateNetworkDisplay = () => {
     if(localChainId && selectedChainId && localChainId !== selectedChainId ){
       return (
-        <div style={{zIndex:2, position:'absolute', right:5,top:58,padding:16}}>
+        <div style={{position:'absolute', right:5,top:62,padding:'5px 8px'}}>
           <Alert
             message={"⚠️ Wrong Network"}
             description={(
@@ -26,7 +26,7 @@ const NetworkDisplay = ({
       )
     }else{
       return (
-        <div style={{zIndex:2, position:'absolute', right:5,top:58,padding:16}}>
+        <div style={{ position:'absolute', right:5,top:75,padding:'5px 8px'}}>
           {networkName}
         </div>
       )
