@@ -12,7 +12,7 @@ import { useExchangePrice, useGasPrice, useUserProvider, useContractLoader,
          useExternalContractLoader} from "./hooks";
 import { Header, TotalStaked, TimeLeft, UserStake, Faucet,
          Ramp, Contract, GasGauge, Balance, Address, StakeWithdrawPanel,
-         Execute, FaucetPanel, StakeEventsPanel } from "./components";
+         Execute, FaucetPanel, StakeEventsPanel, NetworkDisplay } from "./components";
 import { Transactor } from "./helpers";
 import { formatEther, parseEther, parseUnits } from "@ethersproject/units";
 import { Hints, ExampleUI, Subgraph } from "./views"
@@ -158,36 +158,6 @@ function App(props) {
     )
   }
 
-
-
-  /*
-  const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
-  console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
-  */
-  let networkDisplay = ""
-  if(localChainId && selectedChainId && localChainId != selectedChainId ){
-    networkDisplay = (
-      <div style={{zIndex:2, position:'absolute', right:0,top:60,padding:16}}>
-        <Alert
-          message={"⚠️ Wrong Network"}
-          description={(
-            <div>
-              You have <b>{NETWORK(selectedChainId).name}</b> selected and you need to be on <b>{NETWORK(localChainId).name}</b>.
-            </div>
-          )}
-          type="error"
-          closable={false}
-        />
-      </div>
-    )
-  }else{
-    networkDisplay = (
-      <div style={{zIndex:2, position:'absolute', right:154,top:28,padding:16,color:targetNetwork.color}}>
-        {targetNetwork.name}
-      </div>
-    )
-  }
-
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect();
     setInjectedProvider(new Web3Provider(provider));
@@ -218,7 +188,6 @@ function App(props) {
         mainnetProvider={mainnetProvider}
         localProvider={localProvider}
       />
-      {networkDisplay}
 
       <main>
 
@@ -230,6 +199,13 @@ function App(props) {
 
             {/* notification bar for threshold met - move later*/}
             {completeDisplay}
+
+            <NetworkDisplay
+              localChainId={localChainId}
+              selectedChainId={selectedChainId}
+              network={NETWORK}
+              networkName={targetNetwork.name}
+            />
 
             <StakeEventsPanel
               stakeEvents={stakeEvents}
@@ -246,7 +222,7 @@ function App(props) {
             />
 
             <Execute
-              onClickHandler={() => tx( writeContracts.Staker.exeucte() )}
+              onClickHandler={() => tx( writeContracts.Staker.execute() )}
               timeLeft={timeLeft}
             />
 

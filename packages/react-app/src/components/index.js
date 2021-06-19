@@ -22,3 +22,4 @@ export { default as Execute } from "./Execute/Execute.jsx";
 export { default as WalletPanel } from "./WalletPanel/WalletPanel.jsx";
 export { default as FaucetPanel } from "./FaucetPanel/FaucetPanel.jsx";
 export { default as StakeEventsPanel } from "./StakeEventsPanel/StakeEventsPanel.jsx";
+export { default as NetworkDisplay } from "./NetworkDisplay/NetworkDisplay.jsx";

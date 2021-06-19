@@ -3,10 +3,10 @@
   top: -55px;
   right: 25px;
   width: 450px;
-  height: 150px;
-  z-index: 100 !important;
+  height: 75px;
   transition-property: top;
   transition-duration: 1s;
+  background: transparent;
 }
 
 .account {
@@ -23,6 +23,7 @@
   border-radius: 0 0 5px 5px;
   padding: 5px 20px;
   cursor: pointer;
+  z-index: 100;
 }
 
 .collapsed {
