@@ -40,7 +40,7 @@ import { INFURA_ID, DAI_ADDRESS, DAI_ABI, NETWORK, NETWORKS } from "./constants"
 const targetNetwork = NETWORKS['rinkeby']; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 // 😬 Sorry for all the console logging
-const DEBUG = false;
+const DEBUG = true
 
 // 🛰 providers
 if(DEBUG) console.log("📡 Connecting to Mainnet Ethereum");
@@ -115,24 +115,31 @@ function App(props) {
 
   //keep track of contract balance to know how much has been staked total:
   const stakerContractBalance = useBalance(localProvider, readContracts && readContracts.Staker.address);
+  console.log('stakercontractbalance', stakerContractBalance);
   if(DEBUG) console.log("💵 stakerContractBalance", stakerContractBalance )
 
   //keep track of total 'threshold' needed of ETH
   const threshold = useContractReader(readContracts,"Staker", "threshold" )
+  console.log("💵 threshold:",threshold)
 
   // keep track of a variable from the contract in the local React state:
   const balanceStaked = useContractReader(readContracts,"Staker", "balances",[ address ])
+  console.log("💸 balanceStaked:",balanceStaked)
 
   //📟 Listen for broadcast events
   const stakeEvents = useEventListener(readContracts, "Staker", "Stake", localProvider, 1);
+  console.log("📟 stake events:",stakeEvents)
 
   // keep track of a variable from the contract in the local React state:
   const timeLeft = useContractReader(readContracts,"Staker", "timeLeft")
+  console.log("⏳ timeLeft:",timeLeft)
 
   // keep track of staker execution feedback
   const executionFeedback = useContractReader(readContracts,"Staker", "executionFeedback")
+  console.log("⏳ executionFeedback:",executionFeedback)
 
   const complete = useContractReader(readContracts,"ExampleExternalContract", "completed")
+  console.log("✅ complete:",complete)
 
   const exampleExternalContractBalance = useBalance(localProvider, readContracts && readContracts.ExampleExternalContract.address);
   if(DEBUG) console.log("💵 exampleExternalContractBalance", exampleExternalContractBalance )
@@ -235,8 +242,6 @@ function App(props) {
                   this <Contract/> component will automatically parse your ABI
                   and give you a form to interact with it locally
               */}
-
-
 
             </Route>
             <Route path="/contracts">
