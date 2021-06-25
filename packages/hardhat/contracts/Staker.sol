@@ -10,7 +10,6 @@ contract Staker {
   event Stake(address, uint256);
   uint256 public constant threshold = .1 ether;
   uint256 public deadline = now + 1 minutes;
-  string public executionFeedback = '';
 
   constructor(address exampleExternalContractAddress) public payable {
     exampleExternalContract = ExampleExternalContract(exampleExternalContractAddress);
@@ -21,6 +20,11 @@ contract Staker {
     _;
   }
 
+  modifier outsideDeadline {
+    require(timeLeft() <= 0, 'time still remaining');
+    _;
+  }
+
   modifier notCompleted {
     require(!exampleExternalContract.completed(), 'ExampleExternalContract already completed');
     _;
@@ -28,6 +32,11 @@ contract Staker {
 
   modifier thresholdNotMet {
     require(address(this).balance < threshold, 'Staking treshold met, awaiting contract execution');
+    _;
+  }
+
+  modifier thresholdMet {
+    require(address(this).balance >= threshold, 'Staking threshold not met, funds available for withdrawal');
     _;
   }
 
@@ -42,16 +51,8 @@ contract Staker {
 
   // After some `deadline` allow anyone to call an `execute()` function
   //  It should either call `exampleExternalContract.complete{value: address(this).balance}()` to send all the value
-  function execute() public notCompleted {
-    if (timeLeft() <= 0) {
-      executionFeedback = "time ran out";
-    } else { // determine if treshold met
-      if (address(this).balance >= threshold) {
-        exampleExternalContract.complete{value: address(this).balance}();
-      } else {
-        executionFeedback = "amount staked threshold not met";
-      }
-    }
+  function execute() public notCompleted outsideDeadline thresholdMet {
+    exampleExternalContract.complete{value: address(this).balance}();
   }
 
   // if the `threshold` was not met, allow everyone to call a `withdraw()` function
