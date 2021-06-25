@@ -6,7 +6,7 @@
   height: 75px;
   transition-property: top;
   transition-duration: 1s;
-  background: transparent;
+  background: transparent !important;
 }
 
 .account {

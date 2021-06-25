@@ -5,9 +5,7 @@ import './Execute.css';
 const execute = ({ onClickHandler, timeLeft }) => {
 
   const generateButton = () => {
-    return timeLeft > 0
-      ? ''
-      : (
+    return (
         <button
           className='execute-button'
           onClick={onClickHandler}

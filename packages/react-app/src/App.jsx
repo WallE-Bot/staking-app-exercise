@@ -219,11 +219,7 @@ function App(props) {
 
             <TimeLeft
               timeLeft={timeLeft}
-            />
-
-            <Execute
               onClickHandler={() => tx( writeContracts.Staker.execute() )}
-              timeLeft={timeLeft}
             />
 
             <UserStake
