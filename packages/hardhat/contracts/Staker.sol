@@ -31,7 +31,7 @@ contract Staker {
   }
 
   modifier thresholdNotMet {
-    require(address(this).balance < threshold, 'Staking treshold met, awaiting contract execution');
+    require(address(this).balance < threshold && timeLeft() <= 0, 'Staking treshold met, awaiting contract execution');
     _;
   }
 
