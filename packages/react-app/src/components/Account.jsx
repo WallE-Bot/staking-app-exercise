@@ -1,10 +1,8 @@
 import React from "react";
 import { Button } from "antd";
-import Address from "./Address";
-import Balance from "./Balance";
-import Wallet from "./Wallet";
+import { Address, Balance, Wallet } from "../components";
 
-export default function Account({
+export default function WalletPanel({
   address,
   userProvider,
   localProvider,
@@ -57,7 +55,7 @@ export default function Account({
   );
 
   return (
-    <div>
+    <div className='account'>
       {display}
       {modalButtons}
     </div>

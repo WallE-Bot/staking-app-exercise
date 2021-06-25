@@ -1,0 +1,42 @@
+.stake-events-panel {
+  position: absolute;
+  left: -350px;
+  top: 79px;
+  width: 450px;
+  height: calc(100vh - 72px);
+  z-index: 100 !important;
+  transition-property: left;
+  transition-duration: 1s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: transparent !important;
+}
+
+.stake-events-panel-tab {
+  font-size: 16px;
+  border: .5px solid #eee;
+  border-left: 0;
+  border-radius: 0 5px 5px 0;
+  padding: 20px 5px;
+  cursor: pointer;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.collapsed-events {
+  left: 0px;
+}
+
+.stake-events-list {
+  list-style-type: none;
+  padding: 25px 0;
+  width: 350px;
+  height: 99.5%;
+  border: .5px solid #eee;
+  border-radius: 0 5px 5px 0;
+}
+
+.stake-events-list-item {
+  padding: 0;
+}

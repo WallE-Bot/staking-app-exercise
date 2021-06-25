@@ -1,0 +1,44 @@
+.time-left {
+  width: 450px;
+  height: 450px;
+  padding: 50px;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  position: relative;
+  box-shadow:
+    0 0 25px #fff,
+    -10px 0 20px #f0f,
+    10px 0 20px #0ff;
+}
+
+.time-left-text {
+  margin-bottom: 120px;
+  margin-top: 10px;
+}
+
+.time-left-clock {
+  font-size: 45px;
+  background: transparent !important;
+}
+
+.help {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  position: absolute;
+  right: -30px;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  cursor: pointer;
+  box-shadow:
+    0 0 10px #fff,
+    -5px 0 10px #0ff,
+    5px 0 10px #0ff;
+}

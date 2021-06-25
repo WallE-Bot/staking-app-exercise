@@ -8,11 +8,10 @@ contract Staker {
   ExampleExternalContract public exampleExternalContract;
   mapping(address => uint256) public balances;
   event Stake(address, uint256);
-  uint256 public constant threshold = 1 wei;
-  uint256 public deadline = now + 30 seconds;
-  string public executionFeedback = '';
+  uint256 public constant threshold = .1 ether;
+  uint256 public deadline = now + 1 minutes;
 
-  constructor(address exampleExternalContractAddress) public {
+  constructor(address exampleExternalContractAddress) public payable {
     exampleExternalContract = ExampleExternalContract(exampleExternalContractAddress);
   }
 
@@ -21,39 +20,49 @@ contract Staker {
     _;
   }
 
+  modifier outsideDeadline {
+    require(timeLeft() <= 0, 'time still remaining');
+    _;
+  }
+
   modifier notCompleted {
     require(!exampleExternalContract.completed(), 'ExampleExternalContract already completed');
+    _;
+  }
+
+  modifier thresholdNotMet {
+    require(address(this).balance < threshold, 'Staking treshold met, awaiting contract execution');
+    _;
+  }
+
+  modifier thresholdMet {
+    require(address(this).balance >= threshold, 'Staking threshold not met, funds available for withdrawal');
     _;
   }
 
   // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
   //  ( make sure to add a `Stake(address,uint256)` event and emit it for the frontend <List/> display )
   function stake(uint amount) external payable withinDeadline {
+    console.log(address(this).balance, amount, msg.value);
     balances[msg.sender] += amount;
     emit Stake(msg.sender, amount);
+    console.log(address(this).balance, amount, msg.value);
   }
 
   // After some `deadline` allow anyone to call an `execute()` function
   //  It should either call `exampleExternalContract.complete{value: address(this).balance}()` to send all the value
-  function execute() public notCompleted {
-    if (timeLeft() <= 0) {
-      executionFeedback = "time ran out";
-    } else { // determine if treshold met
-      if (address(this).balance >= threshold) {
-        exampleExternalContract.complete{value: address(this).balance}();
-      } else {
-        executionFeedback = "amount staked threshold not met";
-      }
-    }
+  function execute() public notCompleted outsideDeadline thresholdMet {
+    exampleExternalContract.complete{value: address(this).balance}();
   }
 
   // if the `threshold` was not met, allow everyone to call a `withdraw()` function
-  function withdraw() public notCompleted {
-    require(timeLeft() <= 0, "Time still remaining to meet staking treshold");
-    require(balances[msg.sender] > 0, "address balance is 0");
+  // modify for specific withdrawal amount
+  function withdraw(uint256 amount) public notCompleted thresholdNotMet {
+    uint balance = balances[msg.sender];
+    console.log(amount, balance);
+    require(balance > 0 && balance >= amount, "address balance insufficient");
 
     // allow withdrawal
-    uint balance = balances[msg.sender];
     balances[msg.sender] = 0;
     msg.sender.transfer(balance);
   }

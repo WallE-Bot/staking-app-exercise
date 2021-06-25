@@ -1,0 +1,17 @@
+.execute-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  position: absolute;
+  right: -30px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow:
+    0 0 10px #fff,
+    -5px 0 10px #0ff,
+    5px 0 10px #0ff;
+}
