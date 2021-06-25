@@ -11,7 +11,7 @@ export default function FaucetPanel({
   networks,
   gasPrice
 }) {
-
+  console.log('localProvider', localProvider);
   const [collapsed, toggleCollapsed] = useState(false);
 
   const handleTabClick = () => {

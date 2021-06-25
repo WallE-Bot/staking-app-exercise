@@ -5,7 +5,6 @@ import EtherInput from '../../components/EtherInput.jsx';
 import { formatEther } from "@ethersproject/units";
 
 const userStake = ({ balanceStaked, stakerContractBalance }) => {
-  console.log(balanceStaked, stakerContractBalance);
 
   const formatUserBalance = balanceStaked === undefined
     ? '0.0'
@@ -14,8 +13,6 @@ const userStake = ({ balanceStaked, stakerContractBalance }) => {
   const formatStakerContractBalance = stakerContractBalance === undefined
     ? '0.0'
     : formatEther(stakerContractBalance);
-
-  console.log(formatUserBalance, formatStakerContractBalance);
 
   const userStakePercentage =
     formatUserBalance === '0.0' || formatStakerContractBalance === '0.0'
