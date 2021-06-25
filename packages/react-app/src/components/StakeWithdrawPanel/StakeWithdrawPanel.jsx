@@ -88,11 +88,9 @@ export default function StakeWithdrawPanel({
 
     const newValue = convertedBalance * percentile;
     setValue(newValue);
-    console.log(newValue);
   }
 
   const handleModeChange = () => {
-    console.log('here');
     const newMode =
       mode === 'USD'
       ? 'ETH'
@@ -105,7 +103,6 @@ export default function StakeWithdrawPanel({
 
     setValue(newValue.toString());
     setMode(newMode);
-    console.log(newValue);
   }
 
   const generatePercentageModButtons = () => {
