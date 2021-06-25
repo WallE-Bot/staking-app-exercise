@@ -8,8 +8,8 @@ contract Staker {
   ExampleExternalContract public exampleExternalContract;
   mapping(address => uint256) public balances;
   event Stake(address, uint256);
-  uint256 public constant threshold = 10 ether;
-  uint256 public deadline = now + 10 minutes;
+  uint256 public constant threshold = .1 ether;
+  uint256 public deadline = now + 1 minutes;
   string public executionFeedback = '';
 
   constructor(address exampleExternalContractAddress) public payable {
@@ -23,6 +23,11 @@ contract Staker {
 
   modifier notCompleted {
     require(!exampleExternalContract.completed(), 'ExampleExternalContract already completed');
+    _;
+  }
+
+  modifier thresholdNotMet {
+    require(address(this).balance < threshold, 'Staking treshold met, awaiting contract execution');
     _;
   }
 
@@ -51,7 +56,7 @@ contract Staker {
 
   // if the `threshold` was not met, allow everyone to call a `withdraw()` function
   // modify for specific withdrawal amount
-  function withdraw(uint256 amount) public notCompleted {
+  function withdraw(uint256 amount) public notCompleted thresholdNotMet {
     uint balance = balances[msg.sender];
     console.log(amount, balance);
     require(balance > 0 && balance >= amount, "address balance insufficient");
