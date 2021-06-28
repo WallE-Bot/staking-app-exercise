@@ -35,6 +35,11 @@ contract Staker {
     _;
   }
 
+  modifier thresholdNotMet {
+    require(address(this).balance <= threshold || timeLeft() >= 0, 'Stake threshold met, awaiting execution');
+    _;
+  }
+
   // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
   //  ( make sure to add a `Stake(address,uint256)` event and emit it for the frontend <List/> display )
   function stake(uint amount) external payable withinDeadline {
@@ -50,7 +55,7 @@ contract Staker {
 
   // if the `threshold` was not met, allow everyone to call a `withdraw()` function
   // modify for specific withdrawal amount
-  function withdraw(uint256 amount) public notCompleted {
+  function withdraw(uint256 amount) public notCompleted thresholdNotMet {
     uint balance = balances[msg.sender];
     require(balance > 0 && balance >= amount, "address balance insufficient");
 
