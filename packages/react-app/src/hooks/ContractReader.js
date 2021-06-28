@@ -39,7 +39,6 @@ export default function useContractReader(contracts, contractName, functionName,
           setValue(newValue);
         }
       } catch (e) {
-        console.log('functionName', functionName);
         console.log(e);
       }
     }
