@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import usePoller from "./Poller";
 
-const DEBUG = true;
+const DEBUG = false;
 
 export default function useContractReader(contracts, contractName, functionName, args, pollTime, formatter, onChange) {
   let adjustPollTime = 1777;
