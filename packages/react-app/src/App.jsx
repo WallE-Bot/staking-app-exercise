@@ -129,9 +129,6 @@ function App(props) {
   // keep track of a variable from the contract in the local React state:
   const timeLeft = useContractReader(readContracts,"Staker", "timeLeft")
 
-  // keep track of staker execution feedback
-  const executionFeedback = useContractReader(readContracts,"Staker", "executionFeedback")
-
   const complete = useContractReader(readContracts,"ExampleExternalContract", "completed")
 
   const exampleExternalContractBalance = useBalance(localProvider, readContracts && readContracts.ExampleExternalContract.address);
@@ -166,12 +163,6 @@ function App(props) {
   useEffect(() => {
     setRoute(window.location.pathname)
   }, [setRoute]);
-
-  const generateExecutionFeedbackHTML = () => {
-    return executionFeedback === ''
-      ? ''
-      : <p>{executionFeedback}</p>;
-  }
 
   return (
     <div className="App">
