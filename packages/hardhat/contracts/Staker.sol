@@ -30,11 +30,6 @@ contract Staker {
     _;
   }
 
-  modifier thresholdNotMet {
-    require(address(this).balance < threshold && timeLeft() <= 0, 'Staking treshold met, awaiting contract execution');
-    _;
-  }
-
   modifier thresholdMet {
     require(address(this).balance >= threshold, 'Staking threshold not met, funds available for withdrawal');
     _;
@@ -55,7 +50,7 @@ contract Staker {
 
   // if the `threshold` was not met, allow everyone to call a `withdraw()` function
   // modify for specific withdrawal amount
-  function withdraw(uint256 amount) public notCompleted thresholdNotMet {
+  function withdraw(uint256 amount) public notCompleted {
     uint balance = balances[msg.sender];
     require(balance > 0 && balance >= amount, "address balance insufficient");
 
